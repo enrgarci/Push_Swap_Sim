@@ -147,7 +147,8 @@ text_a = stack_a.copy()
 text_b = []
 
 numeric = [i for i in input if i.isdigit()]
-repeate = [i for i in numeric if numeric.count(i)== 1 ]
-if (len(input) and len(numeric) == len(input) == len(repeate)):
+#repeate = [i for i in numeric if numeric.count(i)== 1 ]
+if (len(input)):# and len(numeric) == len(input) == len(repeate)):
     DrawGUI(text_a, text_b)
-sg.popup('Wrong Input', keep_on_top=True)
+else:
+    sg.popup('Wrong Input', keep_on_top=True)
