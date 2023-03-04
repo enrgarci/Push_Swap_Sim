@@ -2,97 +2,65 @@ import PySimpleGUI as sg
 
 history = []
 
+KEY_A = 'T_SA'
+KEY_B = 'T_SB'
 
-def sa(window, text_a):
-    if (len(text_a) > 1):
-        history.append('sa')
-        temp = text_a[0]
-        text_a[0] = text_a[1]
-        text_a[1] = temp
-        window['T_SA'].update(text_a)
+def sx(window, t, key, move):
+    if (len(t) > 1):
+        history.append(move)
+        temp = t[0]
+        t[0] = t[1]
+        t[1] = temp
+        window[key].update(t)
         window['T_H'].update(" ".join(map(str, history)))
 
 
-def sb(window, text_b):
-    if (len(text_b) > 1):
-        history.append('sb')
-        temp = text_b[0]
-        text_b[0] = text_b[1]
-        text_b[1] = temp
-        window['T_SB'].update(text_b)
-        window['T_H'].update(" ".join(map(str, history)))
-
-
-def pa(window, text_a, text_b):
+def px(window, text_a, text_b, key_a, key_b, move):
     if (len(text_b) > 0):
-        history.append('pa')
+        history.append(move)
         window['T_H'].update(" ".join(map(str, history)))
         text_a.insert(0, text_b[0])
         text_b.pop(0)
-        window['T_SA'].update(text_a)
-        window['T_SB'].update(text_b)
+        window[key_a].update(text_a)
+        window[key_b].update(text_b)
 
 
-def pb(window, text_a, text_b):
-    if (len(text_a) > 0):
-        history.append('pb')
-        window['T_H'].update(" ".join(map(str, history)))
-        text_b.insert(0, text_a[0])
-        text_a.pop(0)
-        window['T_SA'].update(text_a)
-        window['T_SB'].update(text_b)
-
-
-def ra(window, text_a):
-    if (len(text_a) > 0):
-        history.append('ra')
-        window['T_H'].update(" ".join(map(str, history)))
-        text_a.append(text_a[0])
-        text_a.pop(0)
-        window['T_SA'].update(text_a)
-
-
-def rb(window, text_b):
-    if (len(text_b) > 0):
-        history.append('rb')
-        window['T_H'].update(" ".join(map(str, history)))
-        text_b.append(text_b[0])
-        text_b.pop(0)
-        window['T_SB'].update(text_b)
-
-
-def rra(window, t):
+def rx(window, t, key, move):
     if (len(t) > 0):
-        history.append('rra')
+        history.append(move)
+        window['T_H'].update(" ".join(map(str, history)))
+        t.append(t[0])
+        t.pop(0)
+        window[key].update(t)
+
+
+def rrx(window, t, key, move):
+    if (len(t) > 0):
+        history.append(move)
         window['T_H'].update(" ".join(map(str, history)))
         t.insert(0, t[-1:][0])
         t.pop()
-        window['T_SA'].update(t)
+        window[key].update(t)
 
 
-def rrb(window, t):
-    if (len(t) > 0):
-        history.append('rrb')
-        window['T_H'].update(" ".join(map(str, history)))
-        t.insert(0, t[-1:][0])
-        t.pop()
-        window['T_SB'].update(t)
+def rr(window, ta, tb, move):
+    rx(window, ta ,KEY_A,'')
+    rx(window, tb, KEY_B, '')
+    history.append(move)
+    window['T_H'].update(" ".join(map(str, history)))
 
 
-def rr(window, ta, tb):
-    ra(window, ta)
-    rb(window, tb)
+def rrr(window, ta, tb, move):
+    rrx(window, ta, KEY_A, '')
+    rrx(window, tb, KEY_B, '')
+    history.append(move)
+    window['T_H'].update(" ".join(map(str, history)))
 
-
-def rrr(window, ta, tb):
-    rra(window, ta)
-    rrb(window, tb)
-
-
-def ss(window, ta, tb):
-    sa(window, ta)
-    sb(window, tb)
-
+def ss(window, ta, tb, move):
+    sx(window, ta, KEY_A, '')
+    sx(window, tb, KEY_B, '')
+    history.append(move)
+    window['T_H'].update(" ".join(map(str, history)))
 
 def reset(window, ta, tb):
         history = []
@@ -150,25 +118,27 @@ def DrawGUI(text_a, text_b):
             history.pop()
             window['T_H'].update(" ".join(map(str, history)))
         if event == 'sa':
-            sa(window, text_a)
+            sx(window, text_a, KEY_A, event)
         if event == 'sb':
-            sb(window, text_b)
+            sx(window, text_b, KEY_B, event)
         if event == 'pa':
-            pa(window, text_a, text_b)
+            px(window, text_a, text_b, KEY_A, KEY_B, event)
         if event == 'pb':
-            pb(window, text_a, text_b)
+            px(window, text_b,text_a, KEY_B,KEY_A, event)
         if event == 'ra':
-            ra(window, text_a)
+            rx(window, text_a, KEY_A, event)
+        if event == 'rb':
+            rx(window, text_b, KEY_B, event)
         if event == 'rra':
-            rra(window, text_a)
+            rrx(window, text_a, KEY_A, event)
         if event == 'rrb':
-            rrb(window, text_b)
+            rrx(window, text_b, KEY_B, event)
         if event == 'rr':
-            rr(window, text_a, text_b)
+            rr(window, text_a, text_b, event)
         if event == 'rrr':
-            rrr(window, text_a, text_b)
+            rrr(window, text_a, text_b,event)
         if event == 'ss':
-            ss(window, text_a, text_b)
+            ss(window, text_a, text_b,event)
         if event == 'Reset':
             reset(window, text_a, text_b)
     check(window, text_a)
