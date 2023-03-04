@@ -94,6 +94,15 @@ def ss(window, ta, tb):
     sb(window, tb)
 
 
+def reset(window, ta, tb):
+        history = []
+        window['T_H'].update(" ".join(map(str, history)))
+        ta = stack_a.copy()
+        tb =[]
+        window['T_SA'].update(ta)
+        window['T_SB'].update(tb)
+        
+        
 def DrawGUI(text_a, text_b):
     history = []
     s_b = (3, 2)
@@ -154,7 +163,8 @@ def DrawGUI(text_a, text_b):
             rrr(window, text_a, text_b)
         if event == 'ss':
             ss(window, text_a, text_b)
-
+        if event == 'Reset':
+            reset(window, text_a, text_b)
     window.close()
 
 
