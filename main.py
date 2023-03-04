@@ -137,6 +137,8 @@ def DrawGUI(text_a, text_b):
         if event == 'Reset':
             reset(window, text_a, text_b)
             history = []
+            text_a = stack_a
+            mov_count = 0
             window['T_H'].update(" ".join(map(str, history)))
         check(window, text_a, mov_count)
     window.close()
