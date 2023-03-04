@@ -54,7 +54,7 @@ def ra(window, text_a):
 
 def rb(window, text_b):
     if (len(text_b) > 0):
-        history.append('ra')
+        history.append('rb')
         window['T_H'].update(" ".join(map(str, history)))
         text_b.append(text_b[0])
         text_b.pop(0)
@@ -87,7 +87,7 @@ def rrr(window, ta, tb):
     rra(window, ta)
     rrb(window, tb)
     
-
+    
 def DrawGUI(text_a, text_b):
     history = []
     s_b = (3, 2)
