@@ -25,6 +25,8 @@ rrr. rra + rrb.
 
 The goal is to get the sorted input on A using the least amount of moves.   
 
+### Usage:
+Run the main.py. Fist pop-up is the stack A. Window has the moves in buttons self explanatory.  
 
 ### Notes:   
 The goal of this project was to make a small simulator of the rules while using for the first time the PySimpleUI package so the code has a lot to improve.
