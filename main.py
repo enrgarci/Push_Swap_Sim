@@ -59,11 +59,9 @@ def reset(window, ta, tb):
         window['T_MC'].update(f'Mov count: 0')
 
 
-def check(window, ta):
-    print(list(map(int,ta)))
-    print(sorted(list(map(int,ta))))
-    if list(map(int,ta)) == sorted(list(map(int,ta))):
-        sg.popup('Sorted !!', keep_on_top=True)
+def check(window, ta,movcount):
+    if list(map(int,ta)) == sorted(list(map(int,stack_a))):
+        sg.popup(f'Sorted on {movcount} moves!!', keep_on_top=True)
         
         
 def DrawGUI(text_a, text_b):
@@ -139,7 +137,7 @@ def DrawGUI(text_a, text_b):
             reset(window, text_a, text_b)
             history = []
             window['T_H'].update(" ".join(map(str, history)))
-        check(window, text_a)
+        check(window, text_a, mov_count)
     window.close()
 
 
