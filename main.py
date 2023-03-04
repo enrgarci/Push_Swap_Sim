@@ -101,6 +101,13 @@ def reset(window, ta, tb):
         tb =[]
         window['T_SA'].update(ta)
         window['T_SB'].update(tb)
+        n_moves = 0
+        
+def check(window, ta):
+    print(list(map(int,ta)))
+    print(sorted(list(map(int,ta))))
+    if list(map(int,ta)) == sorted(list(map(int,ta))):
+        sg.popup_auto_close('Sorted !!', keep_on_top=True)
         
         
 def DrawGUI(text_a, text_b):
