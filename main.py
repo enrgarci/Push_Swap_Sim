@@ -101,8 +101,7 @@ def reset(window, ta, tb):
         tb =[]
         window['T_SA'].update(ta)
         window['T_SB'].update(tb)
-        n_moves = 0
-        
+                
 def check(window, ta):
     print(list(map(int,ta)))
     print(sorted(list(map(int,ta))))
