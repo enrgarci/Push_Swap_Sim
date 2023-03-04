@@ -5,6 +5,7 @@ movs = ['ra','rb','rr','rra','rrb','rrr','sa','sb','ss','pa','pb']
 KEY_A = 'T_SA'
 KEY_B = 'T_SB'
 
+#sa and sb rules
 def sx(window, t, key):
     if (len(t) > 1):
         temp = t[0]
@@ -12,7 +13,7 @@ def sx(window, t, key):
         t[1] = temp
         window[key].update(t)
 
-
+#pa and pb rules
 def px(window, text_a, text_b, key_a, key_b):
     if (len(text_b) > 0):
         text_a.insert(0, text_b[0])
@@ -20,37 +21,37 @@ def px(window, text_a, text_b, key_a, key_b):
         window[key_a].update(text_a)
         window[key_b].update(text_b)
 
-
+#ra and rb rules
 def rx(window, t, key):
     if (len(t) > 0):
         t.append(t[0])
         t.pop(0)
         window[key].update(t)
 
-
+#rra and rrb rules
 def rrx(window, t, key):
     if (len(t) > 0):
         t.insert(0, t[-1:][0])
         t.pop()
         window[key].update(t)
 
-
+#rr rule
 def rr(window, ta, tb):
     rx(window, ta ,KEY_A)
     rx(window, tb, KEY_B)
 
 
-
+#rrr rule
 def rrr(window, ta, tb):
     rrx(window, ta, KEY_A)
     rrx(window, tb, KEY_B)
 
-
+#ss rule
 def ss(window, ta, tb):
     sx(window, ta, KEY_A)
     sx(window, tb, KEY_B)
 
-
+# resets the Stack A and history
 def reset(window, ta, tb):
         ta = stack_a.copy()
         tb =[]
@@ -58,12 +59,12 @@ def reset(window, ta, tb):
         window['T_SB'].update(tb)
         window['T_MC'].update(f'Mov count: 0')
 
-
+# checks if the Stack A is sorted if so a PopUp is made
 def check(window, ta,movcount):
     if list(map(int,ta)) == sorted(list(map(int,stack_a))):
         sg.popup(f'Sorted on {movcount} moves!!', keep_on_top=True)
         
-        
+#GUI and events
 def DrawGUI(text_a, text_b):
     s_b = (3, 2)
     mov_count = 0
@@ -140,13 +141,14 @@ def DrawGUI(text_a, text_b):
         check(window, text_a, mov_count)
     window.close()
 
-
+#input
 input = sg.popup_get_text('Input stack A', title="Textbox")
 stack_a = input.split()
 text_a = stack_a.copy()
 text_b = []
 
-numeric = [i for i in input if i.isdigit()]
+#some filtering TODO
+#numeric = [i for i in input if i.isdigit()]
 #repeate = [i for i in numeric if numeric.count(i)== 1 ]
 if (len(input)):# and len(numeric) == len(input) == len(repeate)):
     DrawGUI(text_a, text_b)
