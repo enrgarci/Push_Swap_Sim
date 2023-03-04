@@ -78,16 +78,22 @@ def rrb(window, t):
         t.pop()
         window['T_SB'].update(t)
 
+
 def rr(window, ta, tb):
     ra(window, ta)
     rb(window, tb)
-    
-    
+
+
 def rrr(window, ta, tb):
     rra(window, ta)
     rrb(window, tb)
-    
-    
+
+
+def ss(window, ta, tb):
+    sa(window, ta)
+    sb(window, tb)
+
+
 def DrawGUI(text_a, text_b):
     history = []
     s_b = (3, 2)
@@ -146,6 +152,8 @@ def DrawGUI(text_a, text_b):
             rr(window, text_a, text_b)
         if event == 'rrr':
             rrr(window, text_a, text_b)
+        if event == 'ss':
+            ss(window, text_a, text_b)
 
     window.close()
 
