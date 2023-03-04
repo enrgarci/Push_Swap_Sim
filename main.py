@@ -171,7 +171,7 @@ def DrawGUI(text_a, text_b):
             ss(window, text_a, text_b)
         if event == 'Reset':
             reset(window, text_a, text_b)
-    
+    check(window, text_a)
     window.close()
 
 
