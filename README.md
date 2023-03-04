@@ -28,7 +28,7 @@ The goal is to get the sorted input on A using the least amount of moves.
 ### Usage:
 Run the main.py. Fist pop-up is the stack A. Window has the moves in buttons self explanatory.    
 ![PopUp](https://github.com/enrgarci/Push_Swap_Sim/blob/main/Images/popup.png).  
-![PopUp](https://github.com/enrgarci/Push_Swap_Sim/blob/main/Images/window.png).   
+![Window](https://github.com/enrgarci/Push_Swap_Sim/blob/main/Images/window.png).   
 
 
 ### Notes:   
