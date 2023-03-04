@@ -26,7 +26,10 @@ rrr. rra + rrb.
 The goal is to get the sorted input on A using the least amount of moves.   
 
 ### Usage:
-Run the main.py. Fist pop-up is the stack A. Window has the moves in buttons self explanatory.  
+Run the main.py. Fist pop-up is the stack A. Window has the moves in buttons self explanatory.    
+![PopUp](https://github.com/enrgarci/Push_Swap_Sim/blob/main/Images/popup.png).  
+![PopUp](https://github.com/enrgarci/Push_Swap_Sim/blob/main/Images/window.png).   
+
 
 ### Notes:   
 The goal of this project was to make a small simulator of the rules while using for the first time the PySimpleUI package so the code has a lot to improve.
