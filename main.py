@@ -1,85 +1,76 @@
 import PySimpleGUI as sg
 
-history = []
+movs = ['ra','rb','rr','rra','rrb','rrr','sa','sb','ss','pa','pb']
 
 KEY_A = 'T_SA'
 KEY_B = 'T_SB'
 
-def sx(window, t, key, move):
+def sx(window, t, key):
     if (len(t) > 1):
-        history.append(move)
         temp = t[0]
         t[0] = t[1]
         t[1] = temp
         window[key].update(t)
-        window['T_H'].update(" ".join(map(str, history)))
 
 
-def px(window, text_a, text_b, key_a, key_b, move):
+def px(window, text_a, text_b, key_a, key_b):
     if (len(text_b) > 0):
-        history.append(move)
-        window['T_H'].update(" ".join(map(str, history)))
         text_a.insert(0, text_b[0])
         text_b.pop(0)
         window[key_a].update(text_a)
         window[key_b].update(text_b)
 
 
-def rx(window, t, key, move):
+def rx(window, t, key):
     if (len(t) > 0):
-        history.append(move)
-        window['T_H'].update(" ".join(map(str, history)))
         t.append(t[0])
         t.pop(0)
         window[key].update(t)
 
 
-def rrx(window, t, key, move):
+def rrx(window, t, key):
     if (len(t) > 0):
-        history.append(move)
-        window['T_H'].update(" ".join(map(str, history)))
         t.insert(0, t[-1:][0])
         t.pop()
         window[key].update(t)
 
 
-def rr(window, ta, tb, move):
-    rx(window, ta ,KEY_A,'')
-    rx(window, tb, KEY_B, '')
-    history.append(move)
-    window['T_H'].update(" ".join(map(str, history)))
+def rr(window, ta, tb):
+    rx(window, ta ,KEY_A)
+    rx(window, tb, KEY_B)
 
 
-def rrr(window, ta, tb, move):
-    rrx(window, ta, KEY_A, '')
-    rrx(window, tb, KEY_B, '')
-    history.append(move)
-    window['T_H'].update(" ".join(map(str, history)))
 
-def ss(window, ta, tb, move):
-    sx(window, ta, KEY_A, '')
-    sx(window, tb, KEY_B, '')
-    history.append(move)
-    window['T_H'].update(" ".join(map(str, history)))
+def rrr(window, ta, tb):
+    rrx(window, ta, KEY_A)
+    rrx(window, tb, KEY_B)
+
+
+def ss(window, ta, tb):
+    sx(window, ta, KEY_A)
+    sx(window, tb, KEY_B)
+
 
 def reset(window, ta, tb):
-        history = []
-        window['T_H'].update(" ".join(map(str, history)))
         ta = stack_a.copy()
         tb =[]
         window['T_SA'].update(ta)
         window['T_SB'].update(tb)
-                
+        window['T_MC'].update(f'Mov count: 0')
+
+
 def check(window, ta):
     print(list(map(int,ta)))
     print(sorted(list(map(int,ta))))
     if list(map(int,ta)) == sorted(list(map(int,ta))):
-        sg.popup_auto_close('Sorted !!', keep_on_top=True)
+        sg.popup('Sorted !!', keep_on_top=True)
         
         
 def DrawGUI(text_a, text_b):
-    history = []
     s_b = (3, 2)
+    mov_count = 0
+    history = []
+    
     col1 = [[sg.Text(f"                "), sg.Button("sa", size=s_b)],
             [sg.Text(f"STACK A :"), sg.Button("ra", size=s_b)],
             [sg.Text(f"                "), sg.Button("rb", size=s_b)],
@@ -98,7 +89,7 @@ def DrawGUI(text_a, text_b):
     col4 = [[sg.Text("HISTORY")],
             [sg.Multiline("History", key='T_H', size=(
                 None, 20), disabled=True)],
-            [sg.Button("Reset", size=(5, 2))]]#,sg.Button("Undo", size=(5, 2))''']]
+            [sg.Button("Reset", size=(5, 2)), sg.Text(f'Mov count: {mov_count}', key='T_MC')]]#,sg.Button("Undo", size=(5, 2))''']]
 
     layout = [[sg.Column(col1, vertical_alignment='top'),
                sg.Column(col2, vertical_alignment='top'),
@@ -118,30 +109,37 @@ def DrawGUI(text_a, text_b):
             history.pop()
             window['T_H'].update(" ".join(map(str, history)))
         if event == 'sa':
-            sx(window, text_a, KEY_A, event)
+            sx(window, text_a, KEY_A)
         if event == 'sb':
-            sx(window, text_b, KEY_B, event)
+            sx(window, text_b, KEY_B)
         if event == 'pa':
-            px(window, text_a, text_b, KEY_A, KEY_B, event)
+            px(window, text_a, text_b, KEY_A, KEY_B)
         if event == 'pb':
-            px(window, text_b,text_a, KEY_B,KEY_A, event)
+            px(window, text_b,text_a, KEY_B,KEY_A)
         if event == 'ra':
-            rx(window, text_a, KEY_A, event)
+            rx(window, text_a, KEY_A)
         if event == 'rb':
-            rx(window, text_b, KEY_B, event)
+            rx(window, text_b, KEY_B)
         if event == 'rra':
-            rrx(window, text_a, KEY_A, event)
+            rrx(window, text_a, KEY_A)
         if event == 'rrb':
-            rrx(window, text_b, KEY_B, event)
+            rrx(window, text_b, KEY_B)
         if event == 'rr':
-            rr(window, text_a, text_b, event)
+            rr(window, text_a, text_b)
         if event == 'rrr':
-            rrr(window, text_a, text_b,event)
+            rrr(window, text_a, text_b)
         if event == 'ss':
-            ss(window, text_a, text_b,event)
+            ss(window, text_a, text_b)
+        if event in movs:
+            mov_count += 1
+            window['T_MC'].update(f'Mov count: {mov_count}')
+            history.append(event)
+            window['T_H'].update(" ".join(map(str, history)))
         if event == 'Reset':
             reset(window, text_a, text_b)
-    check(window, text_a)
+            history = []
+            window['T_H'].update(" ".join(map(str, history)))
+        check(window, text_a)
     window.close()
 
 
