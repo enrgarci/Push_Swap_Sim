@@ -124,7 +124,7 @@ def DrawGUI(text_a, text_b):
     col4 = [[sg.Text("HISTORY")],
             [sg.Multiline("History", key='T_H', size=(
                 None, 20), disabled=True)],
-            [sg.Button("Reset", size=(5, 2)), sg.Button("Undo", size=(5, 2))]]
+            [sg.Button("Reset", size=(5, 2))]]#,sg.Button("Undo", size=(5, 2))''']]
 
     layout = [[sg.Column(col1, vertical_alignment='top'),
                sg.Column(col2, vertical_alignment='top'),
@@ -165,6 +165,7 @@ def DrawGUI(text_a, text_b):
             ss(window, text_a, text_b)
         if event == 'Reset':
             reset(window, text_a, text_b)
+    
     window.close()
 
 
